@@ -1,0 +1,31 @@
+apiVersion: apiextensions.crossplane.io/v2
+kind: CompositeResourceDefinition
+metadata:
+  name: servicebackends.platform.acme.io
+spec:
+  scope: Namespaced
+  group: platform.acme.io
+  names:
+    kind: ServiceBackend
+    plural: servicebackends
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            required: ["environment", "size"]
+            properties:
+              environment:
+                type: string
+                enum: ["dev", "staging", "prod"]
+              size:
+                type: string
+                enum: ["small", "medium", "large"]
+              enableReceiptsBucket:
+                type: boolean
+                default: false
